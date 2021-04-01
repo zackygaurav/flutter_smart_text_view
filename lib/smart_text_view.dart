@@ -115,16 +115,23 @@ class SmartText extends StatelessWidget {
   /// Callback for tapping a user tag
   final StringCallback onUserTagClick;
 
-  const SmartText({
-    Key key,
-    this.text,
-    this.style,
-    this.linkStyle,
-    this.tagStyle,
-    this.onOpen,
-    this.onTagClick,
-    this.onUserTagClick
-  }) : super(key: key);
+  final int maxLines;
+  final bool softWrap;
+  final TextOverflow textOverflow;
+
+  const SmartText(
+      {Key key,
+      this.text,
+      this.style,
+      this.linkStyle,
+      this.tagStyle,
+      this.onOpen,
+      this.onTagClick,
+      this.onUserTagClick,
+      this.maxLines = 3,
+      this.softWrap = false,
+      this.textOverflow = TextOverflow.ellipsis})
+      : super(key: key);
 
   /// Raw TextSpan builder for more control on the RichText
   TextSpan _buildTextSpan(
@@ -156,7 +163,7 @@ class SmartText extends StatelessWidget {
     final elements = _smartify(text);
 
     return TextSpan(
-      children: elements.map<TextSpan>((element) {
+        children: elements.map<TextSpan>((element) {
       if (element is TextElement) {
         return TextSpan(
           text: element.text,
@@ -188,32 +195,31 @@ class SmartText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       softWrap: true,
-      maxLines: 3,
+      maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       text: _buildTextSpan(
-        text: text,
-        style: Theme.of(context).textTheme.body1.merge(style),
-        linkStyle: Theme.of(context)
-            .textTheme
-            .body1
-            .merge(style)
-            .copyWith(
-              color: Colors.blueAccent,
-              decoration: TextDecoration.underline,
-            )
-            .merge(linkStyle),
-        tagStyle: Theme.of(context)
-            .textTheme
-            .body1
-            .merge(style)
-            .copyWith(
-              color: Colors.blueAccent,
-            )
-            .merge(linkStyle),
-        onOpen: onOpen,
-        onTagClick: onTagClick,
-        onUserTagClick: onUserTagClick
-      ),
+          text: text,
+          style: Theme.of(context).textTheme.body1.merge(style),
+          linkStyle: Theme.of(context)
+              .textTheme
+              .body1
+              .merge(style)
+              .copyWith(
+                color: Colors.blueAccent,
+                decoration: TextDecoration.underline,
+              )
+              .merge(linkStyle),
+          tagStyle: Theme.of(context)
+              .textTheme
+              .body1
+              .merge(style)
+              .copyWith(
+                color: Colors.blueAccent,
+              )
+              .merge(linkStyle),
+          onOpen: onOpen,
+          onTagClick: onTagClick,
+          onUserTagClick: onUserTagClick),
     );
   }
 }
