@@ -188,6 +188,8 @@ class SmartText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       softWrap: true,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
       text: _buildTextSpan(
         text: text,
         style: Theme.of(context).textTheme.body1.merge(style),
