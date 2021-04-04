@@ -128,7 +128,7 @@ class SmartText extends StatelessWidget {
       this.onOpen,
       this.onTagClick,
       this.onUserTagClick,
-      this.maxLines = 3,
+      this.maxLines,
       this.softWrap = false,
       this.textOverflow = TextOverflow.ellipsis})
       : super(key: key);
@@ -195,7 +195,7 @@ class SmartText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       softWrap: true,
-      maxLines: maxLines,
+      maxLines: maxLines ?? null,
       overflow: TextOverflow.ellipsis,
       text: _buildTextSpan(
           text: text,
